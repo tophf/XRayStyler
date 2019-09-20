@@ -9,31 +9,13 @@ document.documentElement.appendChild(
 
 window.dispatchEvent(new CustomEvent(EVENT_ID, {
   detail: /* language=CSS */ `
-    .text .gr-account-label {
-      max-width: 10em;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      display: block;
-    }
-    .gr-account-label[title] {
-      display: flex;
-      flex-direction: row;
-    }
-    .gr-linked-text-0 {
-      font-family: sans-serif;
-    }
-    gr-limited-text.style-scope.gr-account-label,
-    span.name.style-scope.gr-account-label {
-      display: inline;
-    }
-    .subject a:visited {
+    a:visited:not(.bigTitle):not([target="_blank"]) {
       color: #e094f3;
     }
-    .subject a:link {
+    a:link:not(.bigTitle):not([target="_blank"]) {
       color: #8dcfff;
     }
-    .gr-change-view-2 .commitMessage.gr-change-view {
+    #output {
       font-family: sans-serif;
     }
   `,
