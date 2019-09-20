@@ -1,0 +1,22 @@
+﻿{
+  "manifest_version": 2,
+  "minimum_chrome_version": "63",
+  "name": "XRayStyler",
+  "version": "1.0",
+  "author": "tophf",
+  "description": "",
+  "background": {
+    "scripts": ["bg.js"],
+    "persistent": true
+  },
+  "permissions": [
+    "https://polymer2-chromium-review.googlesource.com/*"
+  ],
+  "content_scripts": [{
+    "matches": ["https://polymer2-chromium-review.googlesource.com/*"],
+    "js": ["content.js"],
+    "run_at": "document_start",
+    "all_frames": true,
+    "match_about_blank": true
+  }]
+}
