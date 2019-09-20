@@ -1,6 +1,6 @@
 ﻿{
   "manifest_version": 2,
-  "minimum_chrome_version": "63",
+  "minimum_chrome_version": "73",
   "name": "XRayStyler",
   "version": "1.0",
   "author": "tophf",
