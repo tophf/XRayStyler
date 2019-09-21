@@ -6,7 +6,10 @@
   "author": "tophf",
   "description": "",
   "content_scripts": [{
-    "matches": ["https://polymer2-chromium-review.googlesource.com/*"],
+    "matches": [
+      "https://polymer2-chromium-review.googlesource.com/*",
+      "https://bugs.chromium.org/*"
+    ],
     "js": ["content.js"],
     "run_at": "document_start",
     "all_frames": true,

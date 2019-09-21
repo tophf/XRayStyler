@@ -8,37 +8,116 @@ document.documentElement.appendChild(
   }));
 
 window.dispatchEvent(new CustomEvent(EVENT_ID, {
-  detail: /* language=CSS */ `
-    a:visited:not(.bigTitle):not([target="_blank"]) {
-      color: #e094f3;
+  detail: (css => {
+    const nonshadow = [];
+    const bySelector = [];
+    const selectors = [];
+    const prefix = '_' + String(Math.random()).slice(2);
+    const source = new CSSStyleSheet();
+    source.replaceSync(css.replace(/@shadow\s+([^{]*)/g, (s, m1) =>
+      `@media ${prefix}${selectors.push(m1.trim())}`));
+    for (const /** @type CSSMediaRule */ rule of source.cssRules) {
+      let {cssText: text} = rule;
+      if (rule.media && rule.conditionText.startsWith(prefix)) {
+        const sel = selectors[rule.conditionText.slice(prefix.length) - 1];
+        text = text.slice(text.indexOf('{') + 1, -1);
+        bySelector.push([sel, text]);
+      } else {
+        nonshadow.push(text);
+      }
     }
-    a:link:not(.bigTitle):not([target="_blank"]) {
-      color: #8dcfff;
+    return {
+      light: nonshadow.length && nonshadow.join(''),
+      bySelector: bySelector.length && bySelector,
+    };
+  })(location.hostname === 'polymer2-chromium-review.googlesource.com' ? /* language=CSS */ `
+
+    @shadow :not(gr-main-header):not(gr-endpoint-decorator) {
+      a:visited {
+        color: #e094f3;
+      }
+      a:link {
+        color: #8dcfff;
+      }
     }
-    #output {
-      font-family: sans-serif;
+    @shadow gr-linked-text {
+      #output {
+        font-family: sans-serif;
+      }
     }
-  `,
+
+  ` : location.hostname === 'bugs.chromium.org' ? /* language=CSS */ `
+
+    :root {
+      --xray-header-color: #fff;
+      --xray-header-input-bg: #66b3ff3d;
+      --xray-header-input-bg-focus: #66b3ff55;
+      --chops-main-font-size: 16px;
+      --monorail-header-height: 50px;
+    }
+    @shadow mr-app {
+      mr-header {
+        background-color: hsl(205, 100%, 12%);
+      }
+    }
+    @shadow mr-header {
+      .project-logo {
+        display: none;
+      }
+    }
+    @shadow mr-dropdown.project-selector,
+            mr-dropdown[\\.icon="arrow_drop_down"] { 
+      button.anchor {
+        color: var(--xray-header-color);
+      }
+    }
+    @shadow mr-dropdown.project-selector,
+            mr-dropdown[icon="settings"],
+            mr-dropdown[\\.icon="arrow_drop_down"],
+            mr-search-bar { 
+      i.material-icons:not(#\\0) {
+        color: #6eadd4 !important;
+      }
+    }
+    @shadow mr-search-bar { 
+      .select-container {
+        background: none;
+        border: none;
+      }
+      .select-container:focus-within select {
+        background-color: orange;
+        color: black;
+      }
+      .select-container select,
+      #searchq,
+      #searchq + button {
+        background-color: var(--xray-header-input-bg);
+        color: var(--xray-header-color);
+        border: none;
+      }
+      #searchq:focus {
+        background-color: var(--xray-header-input-bg-focus);
+      }
+      #searchq::placeholder {
+        color: var(--xray-header-color);
+        opacity: .5;
+      }
+    }
+
+  ` : ''),
 }));
 
 function inPage(eventId) {
-  const style = new CSSStyleSheet();
-  document.adoptedStyleSheets = [...document.adoptedStyleSheets, style];
+  let attachShadow;
+  let light, bySelector;
 
-  const {attachShadow} = Element.prototype;
-  Element.prototype.attachShadow = onAttach;
-
+  // save the Object methods just in case as they are most likely native at document_start
   const describe = Object.getOwnPropertyDescriptor;
   const define = Object.defineProperty;
   const docAss = describe(Document.prototype, 'adoptedStyleSheets');
   const shadowAss = describe(ShadowRoot.prototype, 'adoptedStyleSheets');
-  define(Document.prototype, 'adoptedStyleSheets', {...docAss, set: setOnDoc});
-  define(ShadowRoot.prototype, 'adoptedStyleSheets', {...shadowAss, set: setOnShadow});
 
-  window.addEventListener(eventId, onMessage);
-
-  if (document.body)
-    reassess(document, true, docAss);
+  window.addEventListener(eventId, onMessage, {once: true});
 
   function onAttach() {
     const root = attachShadow.apply(this, arguments);
@@ -46,32 +125,42 @@ function inPage(eventId) {
     return root;
   }
 
-  function onMessage(e) {
-    style.replaceSync(e.detail);
-  }
-
-  function reassess(root, ass = shadowAss) {
-    const sheets = ass.get.call(root);
-    if (!sheets.includes(style))
-      ass.set.call(root, [...sheets, style]);
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
-    for (let el; (el = walker.nextNode());)
-      if (el.shadowRoot)
-        reassess(el.shadowRoot);
+  function onMessage({detail: data}) {
+    if (data.light) {
+      light = new CSSStyleSheet();
+      light.replaceSync(data.light);
+      setOnDoc(document.adoptedStyleSheets);
+      define(Document.prototype, 'adoptedStyleSheets', {...docAss, set: setOnDoc});
+    }
+    if (data.bySelector) {
+      bySelector = data.bySelector;
+      for (const kv of bySelector) {
+        const shit = new CSSStyleSheet();
+        shit.replaceSync(kv[1]);
+        kv[1] = shit;
+      }
+      define(ShadowRoot.prototype, 'adoptedStyleSheets', {...shadowAss, set: setOnShadow});
+      attachShadow = Element.prototype.attachShadow;
+      Element.prototype.attachShadow = onAttach;
+    }
   }
 
   function setOnDoc(sheets) {
-    return docAss.set.call(this, setStyle(sheets));
+    return docAss.set.call(document,
+      light && !sheets.includes(light) ?
+        [...sheets, light] :
+        sheets);
   }
 
   function setOnShadow(sheets) {
-    return shadowAss.set.call(this, setStyle(sheets));
-  }
-
-  function setStyle(sheets) {
-    // TODO: make a few attempts to move our style to the end of the array
-    return Array.isArray(sheets) && !sheets.includes(style) ?
-      [...sheets, style] :
-      sheets;
+    let cloned;
+    for (const [selector, shit] of bySelector)
+      if (!sheets.includes(shit))
+        if (selector === '' ||
+            selector === '*' ||
+            this.host.localName === selector ||
+            this.host.matches(selector))
+          (cloned || (cloned = sheets.slice())).push(shit);
+    return shadowAss.set.call(this, cloned || sheets);
   }
 }
