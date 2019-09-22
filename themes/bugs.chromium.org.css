@@ -1,0 +1,96 @@
+:root {
+  --xray-header-color: #fff;
+  --xray-header-input-bg: hsla(210, 100%, 70%, 0.24);
+  --xray-header-input-bg-focus: hsla(210, 100%, 70%, 0.33);
+  --xray-background: hsl(195, 7%, 84%);
+  --xray-meta-background: hsl(189, 7%, 76%);
+  --xray-left-pane-width: 12rem;
+  --xray-outer-padding: 2rem;
+  --xray-header-overlap: .5rem;
+  --xray-header-overlap-negated: calc(var(--xray-header-overlap) * -1);
+  --xray-left-pane-outer-width: calc(var(--xray-left-pane-width) + var(--xray-outer-padding));
+  --xray-closed-background: hsl(195, 30%, 26%);
+  --xray-closed-color: hsl(202, 19%, 51%);
+  --xray-header-background: linear-gradient(to right,
+    hsl(202, 45%, 52%) var(--xray-header-overlap),
+    hsl(202, 10%, 70%) var(--xray-header-overlap),
+    var(--xray-background));
+  --chops-main-font-size: 16px;
+  --monorail-header-height: 50px;
+}
+@shadow mr-app {
+  mr-header {
+    background-color: hsl(205, 100%, 12%);
+    border: none;
+  }
+}
+@shadow mr-header {
+  .project-logo {
+    display: none;
+  }
+  mr-dropdown + a[href*="ServiceLogin"] {
+    color: var(--xray-header-color);
+  }
+}
+@shadow mr-dropdown.project-selector,
+        mr-dropdown[\.icon="arrow_drop_down"] {
+  button.anchor {
+    color: var(--xray-header-color);
+  }
+}
+@shadow mr-dropdown.project-selector,
+        mr-dropdown[icon="settings"],
+        mr-dropdown[\.icon="arrow_drop_down"],
+        #searchq ~ mr-dropdown,
+        mr-search-bar {
+  i.material-icons:not(#\0) {
+    color: #6eadd4 !important;
+  }
+}
+@shadow mr-search-bar {
+  .select-container,
+  #searchq ~ mr-dropdown {
+    background: none;
+    border: none;
+  }
+  .select-container select {
+    opacity: .6;
+  }
+  form:focus-within select {
+    background-color: orange;
+    color: black;
+    opacity: 1;
+  }
+  .select-container select:not(#\0),
+  #searchq:not(#\0),
+  #searchq + button:not(#\0) {
+    background-color: var(--xray-header-input-bg);
+    color: var(--xray-header-color);
+    border: none;
+  }
+  #searchq:focus {
+    background-color: var(--xray-header-input-bg-focus);
+  }
+  #searchq::placeholder {
+    color: var(--xray-header-color);
+    opacity: .5;
+  }
+}
+@shadow mr-issue-page {
+  .metadata-container {
+    background: var(--xray-meta-background);
+    min-width: 0;
+    width: 16rem;
+  }
+  mr-issue-header {
+    background: var(--xray-header-background);
+  }
+}
+@shadow mr-issue-metadata,
+        mr-metadata {
+  th, h3 {
+    font-size: 11px !important;
+    width: 4em !important;
+    vertical-align: middle !important;
+  }
+}

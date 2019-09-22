@@ -5,12 +5,22 @@
   "version": "1.0",
   "author": "tophf",
   "description": "",
+  "background": {
+    "page": "bg/bg.html",
+    "persistent": false
+  },
+  "permissions": [
+    "storage",
+    "webNavigation",
+    "https://polymer2-chromium-review.googlesource.com/",
+    "https://bugs.chromium.org/"
+  ],
   "content_scripts": [{
     "matches": [
       "https://polymer2-chromium-review.googlesource.com/*",
       "https://bugs.chromium.org/*"
     ],
-    "js": ["content.js"],
+    "js": ["/content/content.js"],
     "run_at": "document_start",
     "all_frames": true,
     "match_about_blank": true

@@ -1,0 +1,13 @@
+@shadow :not(gr-main-header):not(gr-endpoint-decorator) {
+  a:visited {
+    color: #e094f3;
+  }
+  a:link {
+    color: #8dcfff;
+  }
+}
+@shadow gr-linked-text {
+  #output {
+    font-family: sans-serif;
+  }
+}
