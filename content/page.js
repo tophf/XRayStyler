@@ -2,7 +2,7 @@
 function inPage(eventId) {
   'use strict';
 
-  const MEDIA_ID = 'XRayStyler'.toLowerCase();
+  const MEDIA_ID = `XRayStyler-${Math.random().toString(36).slice(2)}`.toLowerCase();
 
   let attachShadow;
   let light, bySelector;
@@ -97,7 +97,7 @@ function inPage(eventId) {
     return shit.media[0] !== MEDIA_ID;
   }
 
-  function selfDestruct() {
+  async function selfDestruct() {
     window.removeEventListener(eventId, onMessage);
 
     // we can only restore the old state if no one else chained on us
@@ -109,6 +109,9 @@ function inPage(eventId) {
     if (curAss.set === setOnShadow &&
         curAss.get === shadowAss.get)
       define(ShadowRoot.prototype, 'adoptedStyleSheets', shadowAss);
+
+    // give the new instance some time to inject the styles
+    await new Promise(resolve => setTimeout(resolve, 100));
 
     removeSheets(document, docAss);
 
