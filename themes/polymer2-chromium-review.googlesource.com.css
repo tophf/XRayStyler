@@ -1,3 +1,7 @@
+:root {
+  font-size: 15px;
+}
+
 @shadow :not(gr-main-header):not(gr-endpoint-decorator) {
   a:visited {
     color: #e094f3;

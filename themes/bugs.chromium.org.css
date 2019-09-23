@@ -1,26 +1,58 @@
 :root {
+  --xray-header-bg: hsl(205, 100%, 12%);
   --xray-header-color: #fff;
   --xray-header-input-bg: hsla(210, 100%, 70%, 0.24);
   --xray-header-input-bg-focus: hsla(210, 100%, 70%, 0.33);
-  --xray-background: hsl(195, 7%, 84%);
-  --xray-meta-background: hsl(189, 7%, 76%);
-  --xray-left-pane-width: 12rem;
-  --xray-outer-padding: 2rem;
-  --xray-header-overlap: .5rem;
-  --xray-header-overlap-negated: calc(var(--xray-header-overlap) * -1);
-  --xray-left-pane-outer-width: calc(var(--xray-left-pane-width) + var(--xray-outer-padding));
-  --xray-closed-background: hsl(195, 30%, 26%);
+  --xray-bg: hsl(195, 7%, 84%);
+  --xray-meta-bg: hsl(189, 7%, 70%);
+  --xray-meta-width: 16rem;
+  --xray-100: 12px;
+  --xray-100-neg: calc(-1 * var(--xray-100));
+  --xray-150: calc(1.5 * var(--xray-100));
+  --xray-200: calc(2 * var(--xray-100));
+  --xray-200-neg: calc(-1 * var(--xray-200));
+  --xray-250: calc(2.5 * var(--xray-100));
+  --xray-250-neg: calc(-1 * var(--xray-250));
+  --xray-closed-bg: hsl(195, 30%, 26%);
   --xray-closed-color: hsl(202, 19%, 51%);
-  --xray-header-background: linear-gradient(to right,
-    hsl(202, 45%, 52%) var(--xray-header-overlap),
-    hsl(202, 10%, 70%) var(--xray-header-overlap),
-    var(--xray-background));
+  --xray-dim-hl: #566b8e;
   --chops-main-font-size: 16px;
+  --chops-page-bg: var(--xray-bg);
   --monorail-header-height: 50px;
 }
+body {
+  background: var(--xray-bg);
+}
+#footer {
+  text-align: center;
+  font-size: 75%;
+  margin: 0 0 1em;
+  background: none;
+}
+#footer a {
+  color: #8b9fa5;
+}
+#footer a:hover {
+  color: #40606a;
+  text-decoration: underline;
+}
+
+/************************************************ ALL */
+
+@shadow * {
+  a:link {
+    text-decoration: none;
+  }
+  a:link:hover {
+    text-decoration: underline;
+  }
+}
+
+/************************************************ HEADER */
+
 @shadow mr-app {
   mr-header {
-    background-color: hsl(205, 100%, 12%);
+    background-color: var(--xray-header-bg);
     border: none;
   }
 }
@@ -36,6 +68,19 @@
         mr-dropdown[\.icon="arrow_drop_down"] {
   button.anchor {
     color: var(--xray-header-color);
+  }
+  .menu {
+    background: #376c9a;
+    border: none;
+    padding: var(--xray-100);
+    min-width: 0;
+  }
+  .menu hr {
+    background: #0248;
+    margin: var(--xray-100) 0;
+  }
+  .menu a:hover {
+    background: none;
   }
 }
 @shadow mr-dropdown.project-selector,
@@ -57,8 +102,8 @@
     opacity: .6;
   }
   form:focus-within select {
-    background-color: orange;
-    color: black;
+    background-color: orange !important;
+    color: black !important;
     opacity: 1;
   }
   .select-container select:not(#\0),
@@ -76,21 +121,307 @@
     opacity: .5;
   }
 }
+
+/************************************************ PAGE */
+
 @shadow mr-issue-page {
-  .metadata-container {
-    background: var(--xray-meta-background);
-    min-width: 0;
-    width: 16rem;
+  .container-issue-content {
+    padding: 0;
   }
-  mr-issue-header {
-    background: var(--xray-header-background);
+  .issue-header-container {
+    margin: 0;
+    width: auto;
+  }
+  mr-issue-details {
+    max-width: none;
+    padding: 0;
+    background: var(--xray-bg);
+  }
+  .metadata-container {
+    background: linear-gradient(var(--xray-meta-bg) 95%, var(--xray-bg) 100%);
+    min-width: 0;
+    width: var(--xray-meta-width);
+    border: none;
+  }
+  mr-issue-metadata {
+    height: auto;
+    width: var(--xray-meta-width);
+    position: fixed;
+  }
+  mr-restriction-indicator {
+    background: linear-gradient(90deg, #00f6ff, transparent);
+    color: #004257;
+    border: none;
   }
 }
+
+/************************************************ TITLE */
+
+@shadow mr-issue-header {
+  :host {
+    background: linear-gradient(to right,
+      hsla(202, 25%, 40%, .1),
+      hsl(202, 25%, 40%) var(--xray-meta-width),
+      hsl(202, 20%, 60%) var(--xray-meta-width),
+      var(--xray-bg));
+    margin-left: calc(-1 * var(--xray-meta-width));
+    padding: var(--xray-100) 0 var(--xray-100) calc(var(--xray-meta-width) + var(--xray-150));
+    border: none;
+    width: auto;
+    pointer-events: none;
+  }
+  :host > * {
+    pointer-events: auto;
+  }
+  h1 {
+    font-size: 130%;
+  }
+  mr-flipper {
+    display: none;
+  }
+  .byline {
+    font-size: 0;
+    line-height: 1rem;
+  }
+  mr-user-link {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-right: 1em;
+  }
+  chops-timestamp {
+    font-size: 1rem;
+    color: var(--xray-dim-hl);
+  }
+  .role-label {
+    font-size: .75rem;
+    vertical-align: super;
+    /* same as in COMMENT */
+    background: #87accc;
+  }
+}
+
+/************************************************ METADATA */
+
 @shadow mr-issue-metadata,
         mr-metadata {
+  .star-line {
+    flex-direction: column;
+  }
+  .bottom-section-cell {
+    display: block;
+  }
+  th, td, h3 {
+    display: block;
+    width: auto;
+    padding: 0;
+    margin: 0;
+  }
+  th {
+    margin-top: var(--xray-100);
+  }
+  td,
+  h3 + div {
+    padding-left: var(--xray-100);
+  }
   th, h3 {
     font-size: 11px !important;
-    width: 4em !important;
-    vertical-align: middle !important;
+  }
+  a[href*="list?q=component:"] {
+    background-color: hsl(46, 100%, 50%);
+    border-radius: .5em;
+    box-shadow: 2px 1px 3px #0006;
+    color: #000 !important;
+    display: inline-block;
+    font-size: .8rem;
+    font-weight: bold;
+    margin-bottom: .25em;
+    margin-left: -.5em;
+    padding: .15em .5em;
+  }
+  a.label {
+    color: #10161d;
+    background-color: #8b9fa5;
+    padding: .15em .5em;
+    position: relative;
+    display: inline-block;
+    border-radius: .5em;
+    overflow: hidden;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+  a.label[title^="TE-Verified"] {
+    color: darkgreen;
+    background-color: #89ab55;
+  }
+  a.label[title^="merge-merged-" i] {
+    background-color: #9900b9;
+    color: #fa88ff;
+  }
+  a.label[title^="ReleaseBlock-"] {
+    background-color: #c00;
+    color: #fff;
+  }
+  a.label[title^="Restrict-"] {
+    background-color: #009ca2;
+    color: #00fffd;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 90%;
+  }
+}
+@shadow mr-star-button {
+  :host {
+    --mr-star-button-size: 4rem;
+  }
+  i.material-icons,
+  i.material-icons.starred {
+    color: #000;
+  }
+}
+
+/************************************************ OP */
+
+@shadow mr-description {
+  :host {
+    margin: 0 !important;
+    padding: var(--xray-100) var(--xray-100) var(--xray-150) var(--xray-150);
+    background-color: #eee;
+  }
+}
+
+/************************************************ COMMENT */
+
+@shadow mr-comment {
+  :host {
+    margin: 0 0 var(--xray-100) 0;
+  }
+  .comment-header {
+    margin: 0 0 var(--xray-100) var(--xray-100-neg);
+    width: auto;
+    padding: var(--xray-100) var(--xray-100) var(--xray-100) var(--xray-250);
+    background: linear-gradient(90deg, #1233, transparent);
+  }
+  .comment-header a {
+    color: var(--xray-dim-hl);
+  }
+  .comment-body {
+    margin: 0 var(--xray-100) 0 var(--xray-150);
+  }
+  .role-label {
+    background: #87accc;
+  }
+  .issue-diff {
+    width: auto;
+    max-width: 35em;
+    background: hsl(45, 30%, 88%);
+    font-size: .8rem;
+    border-radius: .8rem;
+    display: inline-block;
+    position: relative;
+    top: var(--xray-200-neg);
+    margin: 0 0 var(--xray-200-neg) var(--xray-100) !important;
+    padding: var(--xray-100);
+    box-shadow: 1px 2px 5px #0002;
+  }
+  chops-timestamp {
+    color: var(--xray-dim-hl);
+  }
+}
+@shadow mr-comment[highlighted] {
+  .comment-header {
+    background: linear-gradient(90deg, #80b4, #80b2);
+  }
+  .comment-header a {
+    color: indigo;
+    font-weight: bold;
+  }
+  .comment-body {
+    outline: 2px dotted indigo;
+    outline-offset: var(--xray-100);
+    margin-left: calc(var(--xray-100) - var(--xray-150));
+    margin-right: 2px;
+    padding-left: calc(var(--xray-150) - var(--xray-100));
+  }
+  .role-label {
+    background: #b198cc;
+  }
+  chops-timestamp {
+    color: indigo;
+  }
+}
+@shadow mr-comment-list {
+  mr-comment[highlighted] {
+    box-shadow: none;
+    border: none;
+  }
+}
+@shadow mr-comment-content {
+  a[href*="//crrev.com/"] {
+    color: #844f02;
+  }
+}
+
+/************************************************ USER LINK */
+
+@shadow mr-user-link,
+        mr-comment-content {
+  a[title*="@chromium.org"][href^="/u/"],
+  a[href*="@chromium.org"] {
+    color: #006845;
+  }
+  a[title*="@google.com"],
+  a[href*="@google.com"] {
+    color: #037ca8;
+  }
+  a[href*="rob@robwu.nl"],
+  a[href*="woxxom@gmail.com"] {
+    font-weight: bold;
+    color: #00c;
+    border-bottom: 8px double currentcolor;
+  }
+}
+
+/************************************************ ATTACHMENT */
+
+@shadow mr-attachment {
+  #view-link {
+    display: none;
+  }
+  .comment-attachment {
+    min-width: 0;
+    background-color: #a2bcc1;
+    border: 4px solid #486e77;
+    box-shadow: 3px 5px 13px #0006;
+    padding: var(--xray-100);
+    margin: var(--xray-100) 0 0;
+  }
+  .comment-attachment:hover {
+    border: 4px solid #159cbb;
+  }
+  .comment-attachment-header {
+    display: block;
+  }
+}
+
+/************************************************ EDITOR */
+
+@shadow mr-edit-issue {
+  #makechanges {
+    display: none;
+  }
+  :host > * {
+    margin: 0 var(--xray-100) 0 var(--xray-150);
+  }
+}
+@shadow mr-edit-metadata {
+  .star-line {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  textarea {
+    background-color: #0001;
   }
 }
