@@ -1,36 +1,40 @@
-export {onNavigation};
-export const cache = new Map();
+const cache = {};
+let code = fetch('/content/page.js')
+  .then(_ => _.text())
+  .then(_ => (code = _));
 
-const queue = new Map();
-const filter = {
+chrome.webNavigation.onBeforeNavigate.addListener(prefetchTheme, {
   url: chrome.runtime.getManifest().content_scripts[0].matches
     .map(m => ({urlPrefix: m.slice(0, -1)})),
-};
+});
 
-chrome.webNavigation.onBeforeNavigate.addListener(onNavigation, filter);
-chrome.webNavigation.onCommitted.addListener(onNavigation, filter);
+chrome.runtime.onMessage.addListener((msg, {tab}, sendResponse) => {
+  const theme = prefetchTheme(tab);
+  const data = [code, theme];
+  if (code instanceof Promise || theme instanceof Promise) {
+    Promise.all(data).then(sendResponse);
+    return true;
+  } else {
+    sendResponse(data);
+  }
+});
 
 chrome.runtime.onInstalled.addListener(async () => {
   (await import('./bg-install.js')).onInstalled();
 });
 
-async function onNavigation({url, id, tabId = id, frameId}) {
+function prefetchTheme({url}) {
   const host = new URL(url).hostname;
-  let tabs = queue.get(host);
-  if (tabs) {
-    tabs.add(tabId);
-    return;
-  }
-  const msg = !cache ? {} : {
-    code: cache.get('!code'),
-    theme: cache.get(host),
-  };
-  if (!msg.code || !msg.theme) {
-    queue.set(host, new Set([tabId]));
-    await (await import('./bg-maker.js')).makeMessage(msg, host);
-    tabs = queue.get(host);
-    queue.delete(host);
-  }
-  for (const id of tabs || [tabId])
-    chrome.tabs.sendMessage(id, msg, frameId >= 0 ? {frameId} : undefined);
+  return cache[host] || (cache[host] = getTheme(host));
+}
+
+function getTheme(host) {
+  return new Promise(resolve => {
+    chrome.storage.local.get(host, async data => {
+      const theme = cache[host] =
+        data[host] ||
+        (await import('./bg-theme.js')).fromSource(host);
+      resolve(theme);
+    });
+  });
 }

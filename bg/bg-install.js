@@ -1,5 +1,3 @@
-import {onNavigation} from './bg.js';
-
 export async function onInstalled() {
   await clearStorage();
   reinjectContentScripts();
@@ -10,7 +8,7 @@ function clearStorage() {
     chrome.storage.local.clear(resolve));
 }
 
-function reinjectContentScripts() {
+async function reinjectContentScripts() {
   chrome.runtime.getManifest().content_scripts.forEach(cs =>
     chrome.tabs.query({url: cs.matches}, tabs =>
       tabs.forEach(tab =>
@@ -20,5 +18,5 @@ function reinjectContentScripts() {
             runAt: cs.run_at,
             allFrames: cs.all_frames,
             matchAboutBlank: cs.match_about_blank,
-          }, () => !chrome.runtime.lastError && onNavigation(tab))))));
+          }, () => chrome.runtime.lastError)))));
 }

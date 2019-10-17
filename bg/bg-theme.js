@@ -1,8 +1,6 @@
-import {readFile} from './bg-maker.js';
-
 export async function fromSource(hostname) {
   const url = chrome.runtime.getURL(`themes/${hostname}.css`);
-  const css = await readFile(url);
+  const css = await (await fetch(url)).text();
   const nonshadow = [];
   const bySelector = [];
   const selectors = [];

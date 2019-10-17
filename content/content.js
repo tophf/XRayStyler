@@ -8,27 +8,21 @@
   window.dispatchEvent(new Event(GENERAL_BAND));
   window.addEventListener(GENERAL_BAND, orphanize);
 
-  chrome.runtime.onMessage.addListener(onRuntimeMessage);
-
-  function onRuntimeMessage(msg) {
-    chrome.runtime.onMessage.removeListener(onRuntimeMessage);
+  chrome.runtime.sendMessage(1, ([code, theme]) => {
     document.documentElement.appendChild(
       Object.assign(document.createElement('script'), {
         textContent: `
           document.currentScript.remove();
-          (${msg.code})('${PRIVATE_BAND}')`,
+          (${code})('${PRIVATE_BAND}')`,
       }));
-    dispatchEvent(new CustomEvent(PRIVATE_BAND, {detail: msg.theme}));
-  }
+    dispatchEvent(new CustomEvent(PRIVATE_BAND, {detail: theme}));
+  });
 
   function orphanize() {
     try {
       // if the API succeeds it means someone tried to kick us out so we'll ignore it
       chrome.i18n.getUILanguage();
       return;
-    } catch (e) {}
-    try {
-      chrome.runtime.onMessage.removeListener(onRuntimeMessage);
     } catch (e) {}
     window.removeEventListener(GENERAL_BAND, orphanize);
     window.dispatchEvent(new CustomEvent(PRIVATE_BAND, {detail: {selfDestruct: true}}));
