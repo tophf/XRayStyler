@@ -374,6 +374,10 @@ body {
   a[href*="@google.com"] {
     color: #037ca8;
   }
+  a[title*="@microsoft.com"],
+  a[href*="@microsoft.com"] {
+    color: #3e6104;
+  }
   a[href*="rob@robwu.nl"],
   a[href*="woxxom@gmail.com"] {
     font-weight: bold;
@@ -390,8 +394,8 @@ body {
   }
   .comment-attachment {
     min-width: 0;
-    background-color: #a2bcc1;
-    border: 4px solid #486e77;
+    background-color: #fff;
+    border: 4px solid #a2bcc1;
     box-shadow: 3px 5px 13px #0006;
     padding: var(--xray-100);
     margin: var(--xray-100) 0 0;
