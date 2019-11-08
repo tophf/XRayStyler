@@ -2,10 +2,10 @@ const cache = {};
 let code = fetch('/content/page.js')
   .then(_ => _.text())
   .then(_ => (code = _));
+export const hosts = chrome.runtime.getManifest().permissions.filter(p => p.includes('/'));
 
 chrome.webNavigation.onBeforeNavigate.addListener(prefetchTheme, {
-  url: chrome.runtime.getManifest().content_scripts[0].matches
-    .map(m => ({urlPrefix: m.slice(0, -1)})),
+  url: hosts.map(h => ({urlPrefix: h})),
 });
 
 chrome.runtime.onMessage.addListener((msg, {tab}, sendResponse) => {

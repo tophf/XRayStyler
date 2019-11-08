@@ -1,6 +1,11 @@
+import {hosts} from './bg.js';
+
+const contentScripts = ['/content/content.js'];
+
 export async function onInstalled() {
   await clearStorage();
   reinjectContentScripts();
+  registerContentScripts();
 }
 
 function clearStorage() {
@@ -8,15 +13,25 @@ function clearStorage() {
     chrome.storage.local.clear(resolve));
 }
 
-async function reinjectContentScripts() {
-  chrome.runtime.getManifest().content_scripts.forEach(cs =>
-    chrome.tabs.query({url: cs.matches}, tabs =>
-      tabs.forEach(tab =>
-        cs.js.forEach(file =>
-          chrome.tabs.executeScript(tab.id, {
-            file,
-            runAt: cs.run_at,
-            allFrames: cs.all_frames,
-            matchAboutBlank: cs.match_about_blank,
-          }, () => chrome.runtime.lastError)))));
+function registerContentScripts() {
+  chrome.declarativeContent.onPageChanged.removeRules(() => {
+    chrome.declarativeContent.onPageChanged.addRules([{
+      conditions: hosts.map(urlPrefix =>
+        new chrome.declarativeContent.PageStateMatcher({pageUrl: {urlPrefix}})),
+      actions: [
+        new chrome.declarativeContent.RequestContentScript({js: contentScripts}),
+      ],
+    }]);
+  });
+}
+
+function reinjectContentScripts() {
+  const ignoreRuntimeError = () => chrome.runtime.lastError;
+  chrome.tabs.query({url: hosts.map(h => h + '*')}, tabs =>
+    tabs.forEach(tab =>
+      contentScripts.forEach(file =>
+        chrome.tabs.executeScript(tab.id, {
+          file,
+          runAt: 'document_start',
+        }, ignoreRuntimeError))));
 }

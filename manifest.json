@@ -12,17 +12,8 @@
   "permissions": [
     "storage",
     "webNavigation",
+    "declarativeContent",
     "https://polymer2-chromium-review.googlesource.com/",
     "https://bugs.chromium.org/"
-  ],
-  "content_scripts": [{
-    "matches": [
-      "https://polymer2-chromium-review.googlesource.com/*",
-      "https://bugs.chromium.org/*"
-    ],
-    "js": ["/content/content.js"],
-    "run_at": "document_start",
-    "all_frames": true,
-    "match_about_blank": true
-  }]
+  ]
 }
