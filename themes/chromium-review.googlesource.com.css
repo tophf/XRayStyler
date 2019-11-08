@@ -13,5 +13,6 @@
 @shadow gr-linked-text {
   #output {
     font-family: sans-serif;
+    font-size: 17px;
   }
 }
