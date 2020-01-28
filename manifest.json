@@ -14,6 +14,7 @@
     "webNavigation",
     "declarativeContent",
     "https://chromium-review.googlesource.com/",
-    "https://bugs.chromium.org/"
+    "https://bugs.chromium.org/",
+    "https://www.chromestatus.com/"
   ]
 }
