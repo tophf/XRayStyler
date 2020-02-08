@@ -465,24 +465,24 @@ pre.prettyprint {
 }
 @shadow mr-comment[highlighted] {
   .comment-header {
-    background: linear-gradient(90deg, #80b4, #80b2);
+    background: linear-gradient(90deg, blueviolet, hsla(284, 100%, 50%, 0.1));
   }
   .comment-header a {
-    color: indigo;
+    color: #fff;
     font-weight: bold;
   }
   .comment-body {
-    outline: 2px dotted indigo;
+    outline: 2px dotted blueviolet;
     outline-offset: var(--xray-100);
     margin-left: calc(var(--xray-100) - var(--xray-150));
     margin-right: 2px;
     padding-left: calc(var(--xray-150) - var(--xray-100));
   }
   .role-label {
-    background: #b198cc;
+    background: blueviolet;
   }
   chops-timestamp {
-    color: indigo;
+    color: #b464ff;
   }
 }
 @shadow mr-comment-list {
@@ -569,6 +569,14 @@ pre.prettyprint {
   }
   .preview:hover {
     border-color: #666;
+  }
+  chops-button.attachment-delete {
+    background: #555;
+    color: #ccc;
+  }
+  chops-button.attachment-delete:hover {
+    background: #666;
+    color: #ddd;
   }
 }
 
