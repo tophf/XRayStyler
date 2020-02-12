@@ -23,6 +23,7 @@
   --chops-secondary-header-bg: #111;
   --chops-normal-border: 1px solid #333;
 }
+html,
 body {
   background: var(--xray-bg);
 }
@@ -517,7 +518,7 @@ pre.prettyprint {
   }
   a[title*="@microsoft.com"],
   a[href*="@microsoft.com"] {
-    color: #FFC107;
+    color: #d9a407;
   }
   a[href*="rob@robwu.nl"],
   a[title="rob@robwu.nl"],
