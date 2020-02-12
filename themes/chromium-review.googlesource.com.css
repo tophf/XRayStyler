@@ -1,4 +1,5 @@
-:root {
+html, body {
+  background: #202124;
   font-size: 15px;
 }
 
@@ -10,9 +11,22 @@
     color: #8dcfff;
   }
 }
+
+@shadow gr-change-view {
+  [name="change-view-integration"] {
+    display: none;
+  }
+}
+
 @shadow gr-linked-text {
   #output {
     font-family: sans-serif;
     font-size: 17px;
+  }
+}
+
+@shadow gr-file-list {
+  .reviewed {
+    display: none;
   }
 }
