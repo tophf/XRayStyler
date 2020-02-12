@@ -9,14 +9,16 @@
   window.addEventListener(GENERAL_BAND, orphanize);
 
   chrome.runtime.sendMessage(1, ([code, theme]) => {
-    document.documentElement.appendChild(
-      Object.assign(document.createElement('script'), {
-        textContent: `
-          document.currentScript.remove();
-          (${code})('${PRIVATE_BAND}')`,
-      }));
+    runInPage(code);
     dispatchEvent(new CustomEvent(PRIVATE_BAND, {detail: theme}));
   });
+
+  function runInPage(code) {
+    const el = document.createElement('script');
+    el.textContent = `(${code})('${PRIVATE_BAND}')`;
+    (document.documentElement || document).appendChild(el);
+    el.remove();
+  }
 
   function orphanize() {
     try {
