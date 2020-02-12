@@ -1,6 +1,9 @@
 'use strict';
 
-(() => {
+// content scripts run again when documentElement is replaced
+self.INJECTED !== 1 && (() => {
+  self.INJECTED = 1;
+
   const GENERAL_BAND = chrome.runtime.id;
   const PRIVATE_BAND = chrome.runtime.id + Math.random().toString(36).slice(1);
 
