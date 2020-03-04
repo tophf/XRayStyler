@@ -22,6 +22,9 @@
   --chops-primary-font-color: #aaa;
   --chops-secondary-header-bg: #111;
   --chops-normal-border: 1px solid #333;
+  --chops-active-choice-bg: #00923d;
+  --chops-active-choice-color: #fff;
+  --chops-choice-bg: #325435;
 }
 html,
 body {
@@ -40,6 +43,22 @@ body {
   color: #40606a;
   text-decoration: underline;
 }
+a:visited, .results a:visited:not(#\0) {
+  color: #e094f3;
+}
+a:link, .results a:link:not(#\0) {
+  color: #8dcfff;
+}
+.list {
+  background: none;
+}
+.results th, .results_lite th {
+  border: none;
+}
+.active_choice {
+  font-weight: bold;
+}
+
 ::-webkit-scrollbar {
   width: 14px;
   height: 14px;
@@ -403,6 +422,9 @@ pre.prettyprint {
     text-overflow: ellipsis;
     max-width: 90%;
   }
+  .row-status {
+    color: cyan;
+  }
 }
 @shadow mr-star-button {
   :host {
@@ -411,6 +433,18 @@ pre.prettyprint {
   i.material-icons,
   i.material-icons.starred {
     color: #fff;
+  }
+}
+@shadow chops-dialog {
+  .dialog-content {
+    background: var(--xray-bg);
+    color: var(--chops-primary-font-color);
+  }
+}
+@shadow mr-related-issues {
+  th, td {
+    background: none;
+    border: none;
   }
 }
 
