@@ -15,6 +15,7 @@
     "declarativeContent",
     "https://chromium-review.googlesource.com/",
     "https://bugs.chromium.org/",
-    "https://www.chromestatus.com/"
+    "https://www.chromestatus.com/",
+    "https://chromestatus.com/"
   ]
 }

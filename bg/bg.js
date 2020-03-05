@@ -24,7 +24,7 @@ chrome.runtime.onInstalled.addListener(async () => {
 });
 
 function prefetchTheme({url}) {
-  const host = new URL(url).hostname;
+  const host = new URL(url).hostname.replace(/^www\./, '');
   return cache[host] || (cache[host] = getTheme(host));
 }
 
