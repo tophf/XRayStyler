@@ -426,9 +426,9 @@ pre.prettyprint {
     color: cyan;
   }
 }
-@shadow mr-star-button {
+@shadow mr-issue-star {
   :host {
-    --mr-star-button-size: 4rem;
+    --mr-star-size: 4rem;
   }
   i.material-icons,
   i.material-icons.starred {
