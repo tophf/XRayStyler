@@ -434,6 +434,9 @@ pre.prettyprint {
   i.material-icons.starred {
     color: #fff;
   }
+  i.material-icons:not(.starred) {
+    opacity: .33;
+  }
 }
 @shadow chops-dialog {
   .dialog-content {
