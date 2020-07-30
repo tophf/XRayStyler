@@ -639,6 +639,7 @@ pre.prettyprint {
     color: #eee;
     background-color: #111;
     border-color: #333;
+    width: 100% !important;
   }
   mr-upload {
     border: none;
