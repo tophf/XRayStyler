@@ -3,7 +3,8 @@ body {
   color: #bbb;
 }
 a:link,
-app-drawer #papermenu {
+app-drawer #papermenu,
+header aside hgroup a {
   color: #42a7ff;
 }
 a:link:hover {
@@ -14,6 +15,7 @@ app-header {
   background: #111;
   color: #ddd;
 }
+header,
 header aside {
   background-color: transparent;
   border: none;
@@ -55,6 +57,12 @@ header nav a:hover {
 }
 chromedash-featurelist {
   max-width: none;
+}
+#drawer-column {
+  flex: 0 0 10rem;
+}
+#content-column {
+  width: calc(100% - 10rem);
 }
 #feature {
   background: #222;
@@ -104,6 +112,7 @@ chromedash-featurelist {
 @shadow chromedash-feature {
   :host {
     background: #222;
+    border-color: #333;
     margin-top: .5rem !important;
   }
   h2 {
