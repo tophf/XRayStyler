@@ -1,14 +1,29 @@
 html, body {
-  background: #202124;
   font-size: 15px;
 }
 
-@shadow :not(gr-main-header):not(gr-endpoint-decorator) {
-  a:visited {
-    color: #e094f3;
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background: #202124;
   }
-  a:link {
-    color: #8dcfff;
+}
+
+@shadow :not(gr-main-header):not(gr-endpoint-decorator) {
+  @media (prefers-color-scheme: dark) {
+    a:visited {
+      color: #e094f3;
+    }
+    a:link {
+      color: #8dcfff;
+    }
+  }
+  @media not screen and (prefers-color-scheme: dark) {
+    a:visited {
+      color: #cc00ff;
+    }
+    a:link {
+      color: #0077ce;
+    }
   }
 }
 
