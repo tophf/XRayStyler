@@ -1,31 +1,3 @@
-:root {
-  --xray-header-bg: #094888;
-  --xray-header-color: #fff;
-  --xray-header-input-bg: hsla(210, 100%, 70%, 0.24);
-  --xray-header-input-bg-focus: hsla(210, 100%, 70%, 0.33);
-  --xray-bg: #222;
-  --xray-meta-bg: #181818;
-  --xray-meta-width: 16rem;
-  --xray-100: 12px;
-  --xray-100-neg: calc(-1 * var(--xray-100));
-  --xray-150: calc(1.5 * var(--xray-100));
-  --xray-200: calc(2 * var(--xray-100));
-  --xray-200-neg: calc(-1 * var(--xray-200));
-  --xray-250: calc(2.5 * var(--xray-100));
-  --xray-250-neg: calc(-1 * var(--xray-250));
-  --xray-closed-bg: hsl(195, 30%, 26%);
-  --xray-closed-color: hsl(202, 19%, 51%);
-  --xray-dim-hl: #566b8e;
-  --chops-main-font-size: 16px;
-  --chops-page-bg: var(--xray-bg);
-  --monorail-header-height: 50px;
-  --chops-primary-font-color: #aaa;
-  --chops-secondary-header-bg: #111;
-  --chops-normal-border: 1px solid #333;
-  --chops-active-choice-bg: #00923d;
-  --chops-active-choice-color: #fff;
-  --chops-choice-bg: #325435;
-}
 html,
 body {
   background: var(--xray-bg);
@@ -37,17 +9,17 @@ body {
   background: none;
 }
 #footer a {
-  color: #8b9fa5;
+  color: #014b61;
 }
 #footer a:hover {
-  color: #40606a;
+  color: #03536c;
   text-decoration: underline;
 }
 a:visited, .results a:visited:not(#\0) {
-  color: #e094f3;
+  color: #650b7b;
 }
 a:link, .results a:link:not(#\0) {
-  color: #8dcfff;
+  color: #023574;
 }
 .list {
   background: none;
@@ -59,47 +31,6 @@ a:link, .results a:link:not(#\0) {
   font-weight: bold;
 }
 
-::-webkit-scrollbar {
-  width: 14px;
-  height: 14px;
-  background: #1a1a1a
-}
-::-webkit-scrollbar-button:single-button {
-  background: radial-gradient(circle at center, #333 40%, #1a1a1a 0)
-}
-::-webkit-scrollbar-button:single-button:hover {
-  background: radial-gradient(circle at center, #444 40%, #1a1a1a 0)
-}
-::-webkit-scrollbar-button:single-button:active {
-  background: radial-gradient(circle at center, #555 40%, #1a1a1a 0)
-}
-::-webkit-scrollbar-track-piece {
-  background: #333;
-  border: 4px solid #1a1a1a;
-  border-radius: 8px
-}
-::-webkit-scrollbar-track-piece:hover {
-  background: #444
-}
-::-webkit-scrollbar-track-piece:active {
-  background: #555
-}
-::-webkit-scrollbar-thumb {
-  border: 3px solid #1a1a1a;
-  border-radius: 8px;
-  background: #555
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #666
-}
-::-webkit-scrollbar-thumb:active {
-  background: #777
-}
-:-webkit-autofill {
-  box-shadow: inset 0 0 0 1000px #111;
-  -webkit-text-fill-color: #fff
-}
-
 /************************************************ ATTACHMENT VIEW */
 mr-header {
   background-color: var(--xray-header-bg);
@@ -107,11 +38,9 @@ mr-header {
 }
 .t2 h3 {
   background: none;
-  color: #ffbc00;
 }
 
 .t2 h3 a {
-  color: #ff6a00;
   font-weight: bold;
 }
 .fc #lines {
@@ -120,36 +49,157 @@ mr-header {
 pre.prettyprint {
   border: none;
 }
-#lines .kwd {
-  color: #c6973e;
+
+:root {
+  --xray-meta-width: 16rem;
+  --xray-100: 12px;
+  --xray-100-neg: calc(-1 * var(--xray-100));
+  --xray-150: calc(1.5 * var(--xray-100));
+  --xray-200: calc(2 * var(--xray-100));
+  --xray-200-neg: calc(-1 * var(--xray-200));
+  --xray-250: calc(2.5 * var(--xray-100));
+  --xray-250-neg: calc(-1 * var(--xray-250));
+  --chops-main-font-size: 16px;
+  --monorail-header-height: 50px;
+  /* colors */
+  --xray-header-bg: #094888;
+  --xray-header-color: #fff;
+  --xray-header-input-bg: hsla(210, 100%, 70%, 0.24);
+  --xray-header-input-bg-focus: hsla(210, 100%, 70%, 0.33);
+  --xray-bg: #eee;
+  --xray-meta-bg: #ddd;
+  --xray-closed-bg: hsl(195, 30%, 26%);
+  --xray-closed-color: hsl(202, 19%, 51%);
+  --xray-dim-hl: #566b8e;
+  --chops-page-bg: var(--xray-bg);
+  --chops-primary-font-color: #000;
+  --chops-active-choice-bg: #00923d;
+  --chops-active-choice-color: #fff;
+  --chops-choice-bg: #325435;
 }
-#lines .pln {
-  color: #ccc;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --xray-header-bg: #094888;
+    --xray-header-color: #fff;
+    --xray-header-input-bg: hsla(210, 100%, 70%, 0.24);
+    --xray-header-input-bg-focus: hsla(210, 100%, 70%, 0.33);
+    --xray-bg: #222;
+    --xray-meta-bg: #181818;
+    --xray-closed-bg: hsl(195, 30%, 26%);
+    --xray-closed-color: hsl(202, 19%, 51%);
+    --xray-dim-hl: #566b8e;
+    --chops-page-bg: var(--xray-bg);
+    --chops-primary-font-color: #aaa;
+    --chops-secondary-header-bg: #111;
+    --chops-normal-border: 1px solid #333;
+    --chops-active-choice-bg: #00923d;
+    --chops-active-choice-color: #fff;
+    --chops-choice-bg: #325435;
+  }
+  #footer a {
+    color: #8b9fa5;
+  }
+  #footer a:hover {
+    color: #40606a;
+  }
+  a:visited, .results a:visited:not(#\0) {
+    color: #e094f3;
+  }
+  a:link, .results a:link:not(#\0) {
+    color: #8dcfff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+    background: #1a1a1a
+  }
+  ::-webkit-scrollbar-button:single-button {
+    background: radial-gradient(circle at center, #333 40%, #1a1a1a 0)
+  }
+  ::-webkit-scrollbar-button:single-button:hover {
+    background: radial-gradient(circle at center, #444 40%, #1a1a1a 0)
+  }
+  ::-webkit-scrollbar-button:single-button:active {
+    background: radial-gradient(circle at center, #555 40%, #1a1a1a 0)
+  }
+  ::-webkit-scrollbar-track-piece {
+    background: #333;
+    border: 4px solid #1a1a1a;
+    border-radius: 8px
+  }
+  ::-webkit-scrollbar-track-piece:hover {
+    background: #444
+  }
+  ::-webkit-scrollbar-track-piece:active {
+    background: #555
+  }
+  ::-webkit-scrollbar-thumb {
+    border: 3px solid #1a1a1a;
+    border-radius: 8px;
+    background: #555
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #666
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: #777
+  }
+  :-webkit-autofill {
+    box-shadow: inset 0 0 0 1000px #111;
+    -webkit-text-fill-color: #fff
+  }
+
+  /************************************************ ATTACHMENT VIEW */
+  mr-header {
+    background-color: var(--xray-header-bg);
+  }
+  .t2 h3 {
+    color: #ffbc00;
+  }
+  .t2 h3 a {
+    color: #ff6a00;
+  }
+  #lines .kwd {
+    color: #c6973e;
+  }
+  #lines .pln {
+    color: #ccc;
+  }
+  #lines .pun {
+    color: #888;
+  }
+  #lines .typ {
+    color: #ff39ff;
+  }
+  #lines .lit {
+    color: #55b9b9;
+  }
+  #lines .str {
+    color: #4dc14d;
+  }
 }
-#lines .pun {
-  color: #888;
-}
-#lines .typ {
-  color: #ff39ff;
-}
-#lines .lit {
-  color: #55b9b9;
-}
-#lines .str {
-  color: #4dc14d;
-}
+
 /************************************************ ALL */
 
 @shadow * {
   a:link {
     text-decoration: none;
-    color: #64baff;
+    color: #023574;
   }
   a:link:hover {
     text-decoration: underline;
   }
   a:visited {
-    color: #a88cff;
+    color: #650b7b;
+  }
+  @media (prefers-color-scheme: dark) {
+    a:link {
+      color: #64baff;
+    }
+    a:visited {
+      color: #a88cff;
+    }
   }
 }
 
@@ -226,8 +276,24 @@ pre.prettyprint {
     opacity: .5;
   }
 }
+@shadow mr-mode-selector {
+  a:link,
+  a:visited {
+    color: #fff;
+  }
+  a[aria-current="false"] {
+    background: #0e73176b;
+  }
+}
 
 /************************************************ PAGE */
+
+@shadow mr-list-page {
+  :host {
+    padding: 0;
+    --mr-edit-field-padding: 0;
+  }
+}
 
 @shadow mr-issue-page {
   .container-issue-content {
@@ -258,45 +324,47 @@ pre.prettyprint {
     color: #004257;
     border: none;
   }
-  ::-webkit-scrollbar {
-    width: 14px;
-    height: 14px;
-    background: #1a1a1a
-  }
-  ::-webkit-scrollbar-button:single-button {
-    background: radial-gradient(circle at center, #333 40%, #1a1a1a 0)
-  }
-  ::-webkit-scrollbar-button:single-button:hover {
-    background: radial-gradient(circle at center, #444 40%, #1a1a1a 0)
-  }
-  ::-webkit-scrollbar-button:single-button:active {
-    background: radial-gradient(circle at center, #555 40%, #1a1a1a 0)
-  }
-  ::-webkit-scrollbar-track-piece {
-    background: #333;
-    border: 4px solid #1a1a1a;
-    border-radius: 8px
-  }
-  ::-webkit-scrollbar-track-piece:hover {
-    background: #444
-  }
-  ::-webkit-scrollbar-track-piece:active {
-    background: #555
-  }
-  ::-webkit-scrollbar-thumb {
-    border: 3px solid #1a1a1a;
-    border-radius: 8px;
-    background: #555
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #666
-  }
-  ::-webkit-scrollbar-thumb:active {
-    background: #777
-  }
-  :-webkit-autofill {
-    box-shadow: inset 0 0 0 1000px #111;
-    -webkit-text-fill-color: #fff
+  @media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar {
+      width: 14px;
+      height: 14px;
+      background: #1a1a1a
+    }
+    ::-webkit-scrollbar-button:single-button {
+      background: radial-gradient(circle at center, #333 40%, #1a1a1a 0)
+    }
+    ::-webkit-scrollbar-button:single-button:hover {
+      background: radial-gradient(circle at center, #444 40%, #1a1a1a 0)
+    }
+    ::-webkit-scrollbar-button:single-button:active {
+      background: radial-gradient(circle at center, #555 40%, #1a1a1a 0)
+    }
+    ::-webkit-scrollbar-track-piece {
+      background: #333;
+      border: 4px solid #1a1a1a;
+      border-radius: 8px
+    }
+    ::-webkit-scrollbar-track-piece:hover {
+      background: #444
+    }
+    ::-webkit-scrollbar-track-piece:active {
+      background: #555
+    }
+    ::-webkit-scrollbar-thumb {
+      border: 3px solid #1a1a1a;
+      border-radius: 8px;
+      background: #555
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #666
+    }
+    ::-webkit-scrollbar-thumb:active {
+      background: #777
+    }
+    :-webkit-autofill {
+      box-shadow: inset 0 0 0 1000px #111;
+      -webkit-text-fill-color: #fff
+    }
   }
 }
 
@@ -335,7 +403,7 @@ pre.prettyprint {
   }
   chops-timestamp {
     font-size: 1rem;
-    color: #0008;
+    color: #fff8;
   }
   .role-label {
     font-size: .75rem;
@@ -393,7 +461,7 @@ pre.prettyprint {
     padding: .15em .5em;
   }
   a.label {
-    background: #253e52;
+    background: #125a9433;
     padding: .15em .5em;
     position: relative;
     display: inline-block;
@@ -403,8 +471,8 @@ pre.prettyprint {
     word-wrap: break-word;
   }
   a.label[title^="TE-Verified"] {
-    color: darkgreen;
-    background-color: #89ab55;
+    color: #cbff86;
+    background-color: #6cab06;
   }
   a.label[title^="merge-merged-" i] {
     background-color: #9900b9;
@@ -423,7 +491,20 @@ pre.prettyprint {
     max-width: 90%;
   }
   .row-status {
-    color: cyan;
+    color: darkcyan;
+    font-weight: bold;
+  }
+  @media (prefers-color-scheme: dark) {
+    a.label {
+      background: #253e52;
+    }
+    a.label[title^="TE-Verified"] {
+      color: darkgreen;
+      background-color: #89ab55;
+    }
+    .row-status {
+      color: cyan;
+    }
   }
 }
 @shadow mr-issue-star {
@@ -432,10 +513,16 @@ pre.prettyprint {
   }
   i.material-icons,
   i.material-icons.starred {
-    color: #fff;
+    color: #005688;
   }
   i.material-icons:not(.starred) {
     opacity: .33;
+  }
+  @media (prefers-color-scheme: dark) {
+    i.material-icons,
+    i.material-icons.starred {
+      color: #fff;
+    }
   }
 }
 @shadow chops-dialog {
@@ -457,7 +544,7 @@ pre.prettyprint {
   :host {
     margin: 0 !important;
     padding: var(--xray-100) var(--xray-100) var(--xray-150) var(--xray-150);
-    background-color: #222;
+    background-color: var(--xray-bg);
   }
 }
 
@@ -485,9 +572,8 @@ pre.prettyprint {
   .issue-diff {
     width: auto;
     max-width: 35em;
-    color: #ccc;
-    background: #111;
-    border: 1px solid #444;
+    background: linen;
+    border: 1px solid wheat;
     font-size: .8rem;
     border-radius: .8rem;
     display: inline-block;
@@ -495,46 +581,61 @@ pre.prettyprint {
     top: var(--xray-200-neg);
     margin: 0 0 var(--xray-200-neg) var(--xray-100) !important;
     padding: .5em 1em;
-    box-shadow: 1px 2px 8px #111;
+    box-shadow: 1px 2px 4px #0004;
   }
   chops-timestamp {
     color: var(--xray-dim-hl);
   }
-}
-@shadow mr-comment[highlighted] {
-  .comment-header {
-    background: linear-gradient(90deg, blueviolet, hsla(284, 100%, 50%, 0.1));
+  :host([highlighted]) {
+    box-shadow: none;
+    border: none;
   }
-  .comment-header a {
+  :host([highlighted]) .comment-header {
+    background: linear-gradient(90deg, #cb97dc, #cb97dc11);
+  }
+  :host([highlighted]) .comment-header a {
     color: #fff;
     font-weight: bold;
   }
-  .comment-body {
+  :host([highlighted]) .comment-body {
     outline: 2px dotted blueviolet;
     outline-offset: var(--xray-100);
     margin-left: calc(var(--xray-100) - var(--xray-150));
     margin-right: 2px;
     padding-left: calc(var(--xray-150) - var(--xray-100));
   }
-  .role-label {
+  :host([highlighted]) .role-label {
     background: blueviolet;
   }
-  chops-timestamp {
+  :host([highlighted]) chops-timestamp {
     color: #b464ff;
   }
-}
-@shadow mr-comment-list {
-  mr-comment[highlighted] {
-    box-shadow: none;
-    border: none;
+  @media (prefers-color-scheme: dark) {
+    .issue-diff {
+      color: #ccc;
+      background: #111;
+      border-color: #444;
+      box-shadow: 1px 2px 8px #111;
+    }
+    chops-timestamp {
+      color: var(--xray-dim-hl);
+    }
+    :host([highlighted]) .comment-header {
+      background: linear-gradient(90deg, blueviolet, hsla(284, 100%, 50%, 0.1));
+    }
   }
 }
 @shadow mr-comment-content {
-  :host {
-    color: #bbb;
-  }
   a[href*="//crrev.com/"] {
-    color: #b99250;
+    color: #8b5600;
+  }
+  @media (prefers-color-scheme: dark) {
+    :host {
+      color: #bbb;
+    }
+    a[href*="//crrev.com/"] {
+      color: #b99250;
+    }
   }
 }
 
@@ -547,15 +648,29 @@ pre.prettyprint {
   }
   a[title*="@chromium.org"][href^="/u/"],
   a[href*="@chromium.org"] {
-    color: #69bd63;
+    color: #075700;
   }
   a[title*="@google.com"],
   a[href*="@google.com"] {
-    color: #9cc900;
+    color: #3a6c00;
   }
   a[title*="@microsoft.com"],
   a[href*="@microsoft.com"] {
-    color: #d9a407;
+    color: #8d6900;
+  }
+  @media (prefers-color-scheme: dark) {
+    a[title*="@chromium.org"][href^="/u/"],
+    a[href*="@chromium.org"] {
+      color: #69bd63;
+    }
+    a[title*="@google.com"],
+    a[href*="@google.com"] {
+      color: #9cc900;
+    }
+    a[title*="@microsoft.com"],
+    a[href*="@microsoft.com"] {
+      color: #d9a407;
+    }
   }
   a[href*="rob@robwu.nl"],
   a[title="rob@robwu.nl"],
@@ -588,33 +703,40 @@ pre.prettyprint {
   }
   .comment-attachment {
     min-width: 0;
-    background: #333;
-    border: none;
+    background: #e4c997;
+    border: 1px solid #b79659;
     border-radius: 1rem;
-    box-shadow: 3px 5px 16px #0006;
+    box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 11px;
     padding: var(--xray-100);
     margin: var(--xray-100) 0 0;
   }
-  .comment-attachment:hover {
-    background: #383838;
-  }
-  .filename {
-    color: #eee;
-  }
-  .preview {
-    border-color: #555;
-    border-radius: .75rem;
-  }
-  .preview:hover {
-    border-color: #666;
-  }
-  chops-button.attachment-delete {
-    background: #555;
-    color: #ccc;
-  }
-  chops-button.attachment-delete:hover {
-    background: #666;
-    color: #ddd;
+  @media (prefers-color-scheme: dark) {
+    .comment-attachment {
+      background: #333;
+      border: none;
+      box-shadow: 3px 5px 16px #0006;
+    }
+    .comment-attachment:hover {
+      background: #383838;
+    }
+    .filename {
+      color: #eee;
+    }
+    .preview {
+      border-color: #555;
+      border-radius: .75rem;
+    }
+    .preview:hover {
+      border-color: #666;
+    }
+    chops-button.attachment-delete {
+      background: #555;
+      color: #ccc;
+    }
+    chops-button.attachment-delete:hover {
+      background: #666;
+      color: #ddd;
+    }
   }
 }
 
@@ -636,18 +758,22 @@ pre.prettyprint {
     margin: 0;
   }
   textarea {
-    color: #eee;
-    background-color: #111;
-    border-color: #333;
     width: 100% !important;
   }
   mr-upload {
     border: none;
     padding: 0;
   }
-  .discard-button {
-    background: #444;
-    color: #999;
+  @media (prefers-color-scheme: dark) {
+    textarea {
+      color: #eee;
+      background-color: #111;
+      border-color: #333;
+    }
+    .discard-button {
+      background: #444;
+      color: #999;
+    }
   }
 }
 @shadow mr-upload {
@@ -665,15 +791,23 @@ pre.prettyprint {
     max-width: 50vw;
     width: auto;
   }
-  :host {
-    color: #ccc;
+  .col-modified {
+    white-space: nowrap;
   }
   th {
-    background: #333;
     border: none;
+    background: #cbdae8;
   }
-  td {
-    border-color: #333;
+  @media (prefers-color-scheme: dark) {
+    :host {
+      color: #ccc;
+    }
+    th {
+      background: #333;
+    }
+    td {
+      border-color: #333;
+    }
   }
 }
 
