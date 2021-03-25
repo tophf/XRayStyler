@@ -205,12 +205,12 @@ pre.prettyprint {
 
 /************************************************ HEADER */
 
-@shadow mr-app {
+/*@shadow mr-app {*/
   mr-header {
     background-color: var(--xray-header-bg);
     border: none;
   }
-}
+/*}*/
 @shadow mr-header {
   .project-logo {
     display: none;
@@ -295,7 +295,7 @@ pre.prettyprint {
   }
 }
 
-@shadow mr-issue-page {
+/*@shadow mr-issue-page {*/
   .container-issue-content {
     padding: 0;
   }
@@ -366,7 +366,7 @@ pre.prettyprint {
       -webkit-text-fill-color: #fff
     }
   }
-}
+/*}*/
 
 /************************************************ TITLE */
 
@@ -742,15 +742,15 @@ pre.prettyprint {
 
 /************************************************ EDITOR */
 
-@shadow mr-edit-issue {
+/*@shadow mr-edit-issue {*/
   #makechanges {
     display: none;
   }
-  :host > * {
+  mr-edit-issue > * {
     margin: 0 var(--xray-100) 0 var(--xray-150);
   }
-}
-@shadow mr-edit-metadata {
+/*}*/
+/*@shadow mr-edit-metadata {*/
   .star-line {
     background: none;
     border: none;
@@ -775,7 +775,7 @@ pre.prettyprint {
       color: #999;
     }
   }
-}
+/*}*/
 @shadow mr-upload {
   color: #fff;
   background: #2f8a00;
