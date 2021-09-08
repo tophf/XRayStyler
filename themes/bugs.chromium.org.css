@@ -791,8 +791,12 @@ pre.prettyprint {
     max-width: 50vw;
     width: auto;
   }
+  .col-opened,
   .col-modified {
     white-space: nowrap;
+  }
+  .col-modified + .col-opened {
+    color: var(--chops-gray-400);
   }
   th {
     border: none;
