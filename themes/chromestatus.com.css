@@ -1,33 +1,15 @@
-body {
-  background: #181818;
-  color: #bbb;
+:root {
+  --page-background: #181818;
+  --default-color: #bbb;
+  --unimportant-text-color: #888;
+  --table-row-background: #341e48;
+  --accordion-background: #4b147e;
+  --light-accent-color: #0087c114;
+  --heading-color: #DDD;
+  --button-color: deepskyblue;
+  --default-border: 1px solid #444;
 }
-a:link,
-app-drawer #papermenu,
-header aside hgroup a {
-  color: #42a7ff;
-}
-a:link:hover {
-  color: #42a7ff !important;
-  text-decoration: underline !important;
-}
-app-header {
-  background: #111;
-  color: #ddd;
-}
-header,
-header aside {
-  background-color: transparent;
-  border: none;
-  text-shadow: none;
-  box-shadow: none;
-}
-header aside, footer {
-  background: #111;
-  border: none;
-  text-shadow: none;
-  box-shadow: none;
-}
+
 .search input {
   background: #000;
   color: #ddd;
@@ -36,93 +18,43 @@ header aside, footer {
 .search input:focus, app-drawer #papermenu paper-item:hover {
   color: #fff;
 }
-h2, h3, h4 {
-  color: #bbb;
-}
-header nav a {
-  background: none;
-  color: #42a7ff;
-  text-shadow: none;
-  box-shadow: none;
-  border: none;
-}
-header nav a:hover {
-  color: #42a7ff;
-}
-#a2hs-button.available {
-  filter: invert(1);
-}
-.drawer-content-wrapper {
-  background: #111;
-}
-chromedash-featurelist {
-  max-width: none;
-}
-#drawer-column {
-  flex: 0 0 10rem;
-}
-#content-column {
-  width: calc(100% - 10rem);
-}
-#feature {
-  background: #222;
+
+@shadow * {
+  :host {
+    --page-background: #181818;
+    --card-background: #222;
+    --card-border: 1px solid #333;
+    --heading-color: #DDD;
+    --nav-link-color: cornflowerblue;
+    --link-color: cornflowerblue;
+    --link-hover-color: lightblue;
+    --dark-spot-color: orange;
+    --md-blue-900: orange;
+  }
 }
 
-::-webkit-scrollbar {
-  width: 14px;
-  height: 14px;
-  background: #1a1a1a
+@shadow chromedash-header {
+  header nav a:hover {
+    color: #fff;
+  }
 }
-::-webkit-scrollbar-button:single-button {
-  background: radial-gradient(circle at center, #333 40%, #1a1a1a 0)
-}
-::-webkit-scrollbar-button:single-button:hover {
-  background: radial-gradient(circle at center, #444 40%, #1a1a1a 0)
-}
-::-webkit-scrollbar-button:single-button:active {
-  background: radial-gradient(circle at center, #555 40%, #1a1a1a 0)
-}
-::-webkit-scrollbar-track-piece {
-  background: #333;
-  border: 4px solid #1a1a1a;
-  border-radius: 8px
-}
-::-webkit-scrollbar-track-piece:hover {
-  background: #444
-}
-::-webkit-scrollbar-track-piece:active {
-  background: #555
-}
-::-webkit-scrollbar-thumb {
-  border: 3px solid #1a1a1a;
-  border-radius: 8px;
-  background: #555
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #666
-}
-::-webkit-scrollbar-thumb:active {
-  background: #777
-}
-:-webkit-autofill {
-  box-shadow: inset 0 0 0 1000px #111;
-  -webkit-text-fill-color: #fff
+
+@shadow chromedash-roadmap-milestone-card {
+  :host {
+    background: #222;
+  }
+  .release {
+    background: #333;
+  }
+  .milestone_info:nth-of-type(3) {
+    border-bottom: 1px solid #222;
+  }
 }
 
 @shadow chromedash-feature {
   :host {
     background: #222;
     border-color: #333;
-    margin-top: .5rem !important;
-  }
-  h2 {
-    color: #ccc;
-    font-size: 20px;
-  }
-  section h3 {
-    color: #988671;
-    font-weight: normal;
-    font-size: 1rem;
   }
   section .impl_status > span:nth-of-type(2n+1) {
     background: #0002;
@@ -130,60 +62,46 @@ chromedash-featurelist {
   section .views .view {
     background: #fff1;
   }
-  .category-tooltip:hover::before,
-  .category-tooltip:active::before,
-  .topcorner .tooltip:hover::before,
-  .topcorner .tooltip:active::before {
-    box-shadow: #000 1px 1px 4px;
-    color: #aaa;
-    background: #444;
-    border-color: #333;
-  }
-  chromedash-color-status {
-    filter: brightness(.51) contrast(8);
+}
+
+@shadow chromedash-stack-rank-page {
+  h3 {
+    color: #ccc !important;
   }
 }
 
-@shadow chromedash-metadata {
-  #versionlist {
-    color: #42a7ff;
-  }
-  #versionlist li:nth-of-type(4) {
-    border-color: #666;
-  }
-  li:hover {
-    color: #fff;
-  }
-}
-
-@shadow chromedash-schedule {
-  .release {
-    background: #1b1b1b;
-    border: 1px solid #111;
-    border-radius: 1rem;
-  }
-  h2, h3, h4 {
-    color: #ccc;
-  }
-  .milestone_info:nth-of-type(3) {
-    border-color: #444;
-  }
-  iron-icon {
-    color: hsl(211, 47%, 60%);
-  }
-}
-
-@shadow chromedash-sample-panel {
+@shadow chromedash-stack-rank-page, chromedash-timeline {
   :host {
-    max-width: none;
+    --md-yellow-100: #400038;
   }
-  :host .card {
-    box-shadow: none;
-    background: #1a1a1a;
-    padding: 16px;
+  h3 {
+    color: #ccc !important;
   }
-  .demo-link {
-    background: none;
-    color: #42a7ff;
+  rect {
+    fill: transparent;
+  }
+  rect[width="1"], rect[height="1"] {
+    fill: #444;
+  }
+  text {
+    fill: #bbb;
+  }
+}
+
+@shadow chromedash-gantt {
+  .empty {
+    background: #333;
+  }
+  .chart .dev_trial {
+    background: #5e5843;
+  }
+  .chart .origin_trial {
+    background: #0c4a4a;
+  }
+}
+
+@shadow sl-skeleton {
+  .skeleton__indicator, .skeleton--sheen .skeleton__indicator {
+    background: #0002;
   }
 }
