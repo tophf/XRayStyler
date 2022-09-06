@@ -3,14 +3,15 @@ function inPage(eventId) {
   'use strict';
 
   const MEDIA_ID = `screen, XRayStyler-${Math.random().toString(36).slice(2)}`.toLowerCase();
+  const ASS = 'adoptedStyleSheets';
 
   let attachShadow;
   let light, bySelector;
 
   const describe = Object.getOwnPropertyDescriptor;
   const define = Object.defineProperty;
-  const docAss = describe(Document.prototype, 'adoptedStyleSheets');
-  const shadowAss = describe(ShadowRoot.prototype, 'adoptedStyleSheets');
+  const docAss = describe(Document.prototype, ASS);
+  const shadowAss = describe(ShadowRoot.prototype, ASS);
 
   window.addEventListener(eventId, onMessage);
 
@@ -29,8 +30,8 @@ function inPage(eventId) {
     if (data.light) {
       light = new CSSStyleSheet({media: MEDIA_ID});
       light.replaceSync(data.light);
-      setOnDoc(document.adoptedStyleSheets);
-      define(Document.prototype, 'adoptedStyleSheets', {...docAss, set: setOnDoc});
+      setOnDoc(document[ASS]);
+      define(Document.prototype, ASS, {...docAss, set: setOnDoc});
     }
     if (data.bySelector) {
       bySelector = data.bySelector;
@@ -39,7 +40,7 @@ function inPage(eventId) {
         shit.replaceSync(kv[1]);
         kv[1] = shit;
       }
-      define(ShadowRoot.prototype, 'adoptedStyleSheets', {...shadowAss, set: setOnShadow});
+      define(ShadowRoot.prototype, ASS, {...shadowAss, set: setOnShadow});
       attachShadow = Element.prototype.attachShadow;
       Element.prototype.attachShadow = onAttach;
       if (document.body)
@@ -85,7 +86,7 @@ function inPage(eventId) {
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
     for (let el; (el = walker.nextNode());) {
       if ((root = el.shadowRoot)) {
-        const sheets = augmentShadow(el, root.adoptedStyleSheets);
+        const sheets = augmentShadow(el, root[ASS]);
         if (sheets)
           shadowAss.set.call(root, sheets);
         reassess(root);
@@ -105,10 +106,10 @@ function inPage(eventId) {
     if (Element.prototype.attachShadow === onAttach)
       Element.prototype.attachShadow = attachShadow;
 
-    const curAss = describe(ShadowRoot.prototype, 'adoptedStyleSheets');
+    const curAss = describe(ShadowRoot.prototype, ASS);
     if (curAss.set === setOnShadow &&
         curAss.get === shadowAss.get)
-      define(ShadowRoot.prototype, 'adoptedStyleSheets', shadowAss);
+      define(ShadowRoot.prototype, ASS, shadowAss);
 
     // give the new instance some time to inject the styles
     await new Promise(resolve => setTimeout(resolve, 100));
