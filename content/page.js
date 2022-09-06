@@ -2,7 +2,7 @@
 function inPage(eventId) {
   'use strict';
 
-  const MEDIA_ID = `XRayStyler-${Math.random().toString(36).slice(2)}`.toLowerCase();
+  const MEDIA_ID = `screen, XRayStyler-${Math.random().toString(36).slice(2)}`.toLowerCase();
 
   let attachShadow;
   let light, bySelector;
