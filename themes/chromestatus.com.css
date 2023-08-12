@@ -8,6 +8,27 @@
   --heading-color: #DDD;
   --button-color: deepskyblue;
   --default-border: 1px solid #444;
+  --sl-panel-background-color: var(--page-background);
+  --md-red-50: #d32f2f;
+  --md-red-600: #E53935;
+  --md-red-700: #ffebee;
+  --md-light-blue-50: #003967;
+  --md-blue-50: #01579b;
+  --md-blue-100: #1565C0;
+  --md-blue-700: #1976d2;
+  --md-blue-800: #bbdefb;
+  --md-blue-900: #E3F2FD;
+  --md-green-50: #1b501e;
+  --md-green-600: #43A047;
+  --md-green-700: #E8F5E9;
+  --md-gray-50: #333;
+  --md-gray-100: #555;
+  --md-gray-300: #777;
+  --md-gray-800: #999;
+  --md-gray-50-alpha: #fff1;
+  --md-gray-100-alpha: #fff3;
+  --md-gray-700-alpha: #fff5;
+  --md-gray-900-alpha: #fff7;
 }
 
 .search input {
@@ -33,9 +54,9 @@
   }
 }
 
-@shadow chromedash-header {
-  header nav a:hover {
-    color: #fff;
+@shadow chromedash-header, chromedash-drawer {
+  nav a:hover {
+    color: #fff !important;
   }
 }
 
@@ -61,6 +82,12 @@
   }
   section .views .view {
     background: #fff1;
+  }
+}
+
+@shadow chromedash-feature-detail {
+  .active .card {
+    border: none;
   }
 }
 
@@ -105,3 +132,11 @@
     background: #0002;
   }
 }
+
+@shadow sl-tag {
+  .tag {
+    background-color: #333 !important;
+    color: #aaa !important;
+  }
+}
+
