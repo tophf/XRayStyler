@@ -10,11 +10,13 @@ And **[chromium-review.googlesource.com](https://chromium-review.googlesource.co
 
 ### Requirements
 
-Chrome 73 or newer.
+1. use Chrome 120 or newer
+2. open `chrome://extensions`
+3. enable `Developer mode` switch in the top right corner
 
 ### How it works
 
-The extension's `content script` adds a `page script` that runs in the page context and intercepts the built-in `attachShadow` and `adoptedStyleSheets` (see [Constructable Stylesheets: seamless reusable styles](https://developers.google.com/web/updates/2019/02/constructable-stylesheets)), the latter helps propagate the preparsed custom user CSS to every shadow root without re-evaluating it. In browsers without this API we would incur a performance penalty for creating a copy of stylesheet element that needs re-parsing inside each shadow (and there could be hundreds on a page), which is why such an extension didn't exist in the past.
+The extension's adds a page script in the MAIN world that intercepts the built-in `attachShadow` and `adoptedStyleSheets` (see [Constructable Stylesheets: seamless reusable styles](https://developers.google.com/web/updates/2019/02/constructable-stylesheets)), the latter helps propagate the preparsed custom user CSS to every shadow root without re-evaluating it. In browsers without this API we would incur a performance penalty for creating a copy of stylesheet element that needs re-parsing inside each shadow (and there could be hundreds on a page), which is why such an extension didn't exist in the past.
 
 The individual shadow roots are targeted using `@shadow` AT-rule:
 

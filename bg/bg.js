@@ -1,40 +1,45 @@
-const cache = {};
-let code = fetch('/content/page.js')
-  .then(_ => _.text())
-  .then(_ => (code = _));
-export const hosts = chrome.runtime.getManifest().permissions.filter(p => p.includes('/'));
+import pageFunc from './bg-page.js';
 
-chrome.webNavigation.onBeforeNavigate.addListener(prefetchTheme, {
-  url: hosts.map(h => ({urlPrefix: h})),
-});
+chrome.runtime.onInstalled.addListener(async e => {
+  if (e.reason !== 'update' && e.reason !== 'install')
+    return;
+  await chrome.offscreen.createDocument({
+    url: '/bg/offscreen.html',
+    reasons: ['DOM_PARSER'],
+    justification: 'Yes',
+  });
+  const hosts = chrome.runtime.getManifest().host_permissions;
+  const funcStr = `${pageFunc}`;
 
-chrome.runtime.onMessage.addListener((msg, {tab}, sendResponse) => {
-  const theme = prefetchTheme(tab);
-  const data = [code, theme];
-  if (code instanceof Promise || theme instanceof Promise) {
-    Promise.all(data).then(sendResponse);
-    return true;
-  } else {
-    sendResponse(data);
+  const [client] = await self.clients.matchAll({includeUncontrolled: true});
+  const mc = new MessageChannel();
+  const pr = Promise.withResolvers();
+  mc.port1.onmessage = pr.resolve;
+  client.postMessage(hosts, [mc.port2]);
+  const {data: themes} = await pr.promise;
+
+  chrome.offscreen.closeDocument();
+
+  const old = await chrome.userScripts.getScripts();
+  if (old[0]) await chrome.userScripts.unregister({ids: old.map(_ => _.id)});
+
+  await chrome.userScripts.register(themes.map(([host, ...args]) => ({
+    id: host,
+    matches: [host + '*'],
+    runAt: 'document_start',
+    world: 'MAIN',
+    js: [{code: `(${funcStr})(${JSON.stringify(args).slice(1, -1)})`}],
+  })));
+
+  for (const [host, ...args] of themes) {
+    for (const tab of await chrome.tabs.query({url: host + '*'})) {
+      chrome.scripting.executeScript({
+        target: {tabId: tab.id},
+        world: 'MAIN',
+        injectImmediately: true,
+        func: pageFunc,
+        args,
+      }).catch(() => 0);
+    }
   }
 });
-
-chrome.runtime.onInstalled.addListener(async () => {
-  (await import('./bg-install.js')).onInstalled();
-});
-
-function prefetchTheme({url}) {
-  const host = new URL(url).hostname.replace(/^www\./, '');
-  return cache[host] || (cache[host] = getTheme(host));
-}
-
-function getTheme(host) {
-  return new Promise(resolve => {
-    chrome.storage.local.get(host, async data => {
-      const theme = cache[host] =
-        data[host] ||
-        (await import('./bg-theme.js')).fromSource(host);
-      resolve(theme);
-    });
-  });
-}

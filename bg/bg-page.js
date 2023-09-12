@@ -1,6 +1,5 @@
-/* eslint strict: [2, function] */
-function inPage(eventId) {
-  'use strict';
+export default function (eventId, themeLight, themeShadow) {
+  'use strict'; // eslint-disable-line strict
 
   const MEDIA_ID = `screen, XRayStyler-${Math.random().toString(36).slice(2)}`.toLowerCase();
   const ASS = 'adoptedStyleSheets';
@@ -13,7 +12,8 @@ function inPage(eventId) {
   const docAss = describe(Document.prototype, ASS);
   const shadowAss = describe(ShadowRoot.prototype, ASS);
 
-  window.addEventListener(eventId, onMessage);
+  addEventListener(eventId, selfDestruct);
+  init();
 
   function onAttach() {
     const root = attachShadow.apply(this, arguments);
@@ -22,19 +22,15 @@ function inPage(eventId) {
     return root;
   }
 
-  function onMessage({detail: data}) {
-    if (!data)
-      return;
-    if (data.selfDestruct)
-      selfDestruct();
-    if (data.light) {
+  function init() {
+    if (themeLight) {
       light = new CSSStyleSheet({media: MEDIA_ID});
-      light.replaceSync(data.light);
+      light.replaceSync(themeLight);
       setOnDoc(document[ASS]);
       define(Document.prototype, ASS, {...docAss, set: setOnDoc});
     }
-    if (data.bySelector) {
-      bySelector = data.bySelector;
+    if (themeShadow) {
+      bySelector = themeShadow;
       for (const kv of bySelector) {
         const shit = new CSSStyleSheet({media: MEDIA_ID});
         shit.replaceSync(kv[1]);
@@ -99,7 +95,7 @@ function inPage(eventId) {
   }
 
   async function selfDestruct() {
-    window.removeEventListener(eventId, onMessage);
+    removeEventListener(eventId, selfDestruct);
 
     // we can only restore the old state if no one else chained on us
     // otherwise our orphan will have to stay and serve as a no-op relay

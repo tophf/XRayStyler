@@ -1,21 +1,22 @@
 ﻿{
-  "manifest_version": 2,
-  "minimum_chrome_version": "73",
+  "manifest_version": 3,
+  "minimum_chrome_version": "120",
   "name": "XRayStyler",
-  "version": "1.0",
+  "version": "1.1",
   "author": "tophf",
-  "description": "",
+  "description": "Don't forget to enable the 'Developer mode' switch in chrome://extensions page!",
   "background": {
-    "page": "bg/bg.html",
-    "persistent": false
+    "service_worker": "bg/bg.js",
+    "type": "module"
   },
   "permissions": [
-    "storage",
-    "webNavigation",
-    "declarativeContent",
+    "offscreen",
+    "scripting",
+    "userScripts"
+  ],
+  "host_permissions": [
     "https://chromium-review.googlesource.com/",
     "https://bugs.chromium.org/",
-    "https://www.chromestatus.com/",
-    "https://chromestatus.com/"
+    "https://*.chromestatus.com/"
   ]
 }
