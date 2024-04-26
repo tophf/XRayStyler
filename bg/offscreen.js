@@ -32,6 +32,7 @@ async function makeCode(host) {
   }
   return [
     host,
+    name,
     chrome.runtime.id,
     light.join(''),
     shadow.length && shadow,

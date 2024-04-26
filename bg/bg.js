@@ -5,22 +5,24 @@ if ((() => {
 })()) chrome.runtime.onInstalled.addListener(async e => {
   if (e.reason !== 'update' && e.reason !== 'install')
     return;
-  const hosts = chrome.runtime.getManifest().host_permissions;
+  const mf = chrome.runtime.getManifest();
+  const hosts = mf.host_permissions;
   const funcStr = `${pageFunc}`;
+  const sourceUrl = `\n//# sourceURL=chrome-extension://${mf.name}/`;
   const themes = await postOffscreen(hosts);
 
   const old = await chrome.userScripts.getScripts();
   if (old[0]) await chrome.userScripts.unregister({ids: old.map(_ => _.id)});
 
-  await chrome.userScripts.register(themes.map(([host, ...args]) => ({
+  await chrome.userScripts.register(themes.map(([host, name, ...args]) => ({
     id: host,
     matches: [host + '*'],
     runAt: 'document_start',
     world: 'MAIN',
-    js: [{code: `(${funcStr})(${JSON.stringify(args).slice(1, -1)})`}],
+    js: [{code: `(${funcStr})(${JSON.stringify(args).slice(1, -1)})${sourceUrl}${name}.js`}],
   })));
 
-  for (const [host, ...args] of themes) {
+  for (const [host, /*name*/, ...args] of themes) {
     for (const tab of await chrome.tabs.query({url: host + '*'})) {
       chrome.scripting.executeScript({
         target: {tabId: tab.id},
