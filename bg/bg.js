@@ -1,24 +1,13 @@
 import pageFunc from './bg-page.js';
 
-chrome.runtime.onInstalled.addListener(async e => {
+if ((() => {
+  try { return chrome.userScripts; } catch (e) { postOffscreen(); }
+})()) chrome.runtime.onInstalled.addListener(async e => {
   if (e.reason !== 'update' && e.reason !== 'install')
     return;
-  await chrome.offscreen.createDocument({
-    url: '/bg/offscreen.html',
-    reasons: ['DOM_PARSER'],
-    justification: 'Yes',
-  });
   const hosts = chrome.runtime.getManifest().host_permissions;
   const funcStr = `${pageFunc}`;
-
-  const [client] = await self.clients.matchAll({includeUncontrolled: true});
-  const mc = new MessageChannel();
-  const pr = Promise.withResolvers();
-  mc.port1.onmessage = pr.resolve;
-  client.postMessage(hosts, [mc.port2]);
-  const {data: themes} = await pr.promise;
-
-  chrome.offscreen.closeDocument();
+  const themes = await postOffscreen(hosts);
 
   const old = await chrome.userScripts.getScripts();
   if (old[0]) await chrome.userScripts.unregister({ids: old.map(_ => _.id)});
@@ -43,3 +32,19 @@ chrome.runtime.onInstalled.addListener(async e => {
     }
   }
 });
+
+async function postOffscreen(msg) {
+  await chrome.offscreen.createDocument({
+    url: '/bg/offscreen.html',
+    reasons: ['DOM_PARSER'],
+    justification: 'Yes',
+  }).catch(() => 0);
+  const [client] = await self.clients.matchAll({includeUncontrolled: true});
+  const mc = new MessageChannel();
+  const pr = Promise.withResolvers();
+  mc.port1.onmessage = pr.resolve;
+  client.postMessage(msg, [mc.port2]);
+  const {data: res} = await pr.promise;
+  chrome.offscreen.closeDocument();
+  return res;
+}

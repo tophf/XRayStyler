@@ -2,8 +2,9 @@
 
 /** @param {MessageEvent} e */
 navigator.serviceWorker.onmessage = async e => {
-  const jobs = e.data.map(makeCode);
-  const res = await Promise.all(jobs);
+  const res = !e.data
+    ? alert('Enable "Developer mode" switch in chrome://extensions page and reload the extension.')
+    : await Promise.all(e.data.map(makeCode));
   e.ports[0].postMessage(res);
 };
 navigator.serviceWorker.startMessages();
