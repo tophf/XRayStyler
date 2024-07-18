@@ -1,8 +1,9 @@
 import pageFunc from './bg-page.js';
 
-if ((() => {
-  try { return chrome.userScripts; } catch (e) { postOffscreen(); }
-})()) chrome.runtime.onInstalled.addListener(async e => {
+let ok;
+try { ok = !!chrome.userScripts; } catch (e) { postOffscreen(); }
+
+if (ok) chrome.runtime.onInstalled.addListener(async e => {
   if (e.reason !== 'update' && e.reason !== 'install')
     return;
   const mf = chrome.runtime.getManifest();
@@ -41,12 +42,7 @@ async function postOffscreen(msg) {
     reasons: ['DOM_PARSER'],
     justification: 'Yes',
   }).catch(() => 0);
-  const [client] = await self.clients.matchAll({includeUncontrolled: true});
-  const mc = new MessageChannel();
-  const pr = Promise.withResolvers();
-  mc.port1.onmessage = pr.resolve;
-  client.postMessage(msg, [mc.port2]);
-  const {data: res} = await pr.promise;
+  const res = await chrome.runtime.sendMessage(msg);
   chrome.offscreen.closeDocument();
   return res;
 }

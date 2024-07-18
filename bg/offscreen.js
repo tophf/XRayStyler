@@ -1,13 +1,12 @@
 'use strict';
 
-/** @param {MessageEvent} e */
-navigator.serviceWorker.onmessage = async e => {
-  const res = !e.data
-    ? alert('Enable "Developer mode" switch in chrome://extensions page and reload the extension.')
-    : await Promise.all(e.data.map(makeCode));
-  e.ports[0].postMessage(res);
-};
-navigator.serviceWorker.startMessages();
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (msg) {
+    Promise.all(msg.map(makeCode)).then(sendResponse);
+    return true;
+  }
+  alert('Enable "Developer mode" switch in chrome://extensions page and reload the extension.');
+});
 
 async function makeCode(host) {
   const name = host.match(/\/\/(?:\*\.)?([^/]+)/)[1];
